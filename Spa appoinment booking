@@ -1,0 +1,247 @@
+import java.util.*;
+/**
+ * This class stores customer details and provides methods to input and display them.
+ */
+class CustomerDetails1
+{
+    private String name;
+    private int age;
+    private long phno;
+
+    CustomerDetails1() 
+	{
+        this.name = "";
+        this.age = 0;
+        this.phno = 0;
+    }
+
+    void Details() 
+	{
+        Scanner s = new Scanner(System.in);
+
+        // Get and validate the Name
+        System.out.println("\nEnter the Name of the customer: ");
+        name = s.nextLine();
+
+        // Get and validate the Age
+        try 
+		{
+            System.out.println("\nEnter the Age of the customer: ");
+            age = s.nextInt();
+            if (age <= 0 || age >= 100) 
+			{
+                throw new InputMismatchException("Invalid age. Age should be between 1 and 99.");
+            }
+        } catch (InputMismatchException e) 
+		{
+            System.out.println("Error: " + e.getMessage());
+            s.nextLine(); 
+            Details(); // call Details() again for re-entering age
+        }
+
+        // Get and validate the Phone Number
+        try 
+		{
+            System.out.println("\nEnter the Phone Number of the Customer: ");
+            phno = s.nextLong();
+            if (String.valueOf(phno).length() != 10) 
+			{
+                throw new InputMismatchException("Invalid phone number. Please enter a valid 10-digit number.");
+            }
+        } catch (InputMismatchException e) 
+		{
+            System.out.println("Error: " + e.getMessage());
+            s.nextLine();
+            Details(); // call Details() again for re-entering phone number
+        }
+    }
+
+    void display() 
+	{
+        System.out.println("\n\n\t\t\t\t****DETAILS PROVIDED BY THE CUSTOMER*****");
+        System.out.println("\n\t\t\t\tName of the customer: " + name);
+        System.out.println("\n\t\t\t\tAge of the customer: " + age);
+        System.out.println("\n\t\t\t\tPhone Number of the customer: " + phno + "\n");
+    }
+}
+
+/**
+ * This class extends CustomerDetails1 and calculates prices for beauty treatments.
+ */
+class Calculation extends CustomerDetails1
+{
+	double Infraredsauna=660;
+	double LEDfacial=799;
+	double AromaTheraphy=499;
+	double FacialCleanup =899;
+	double Pedicure=499;
+	double Manicure=499;
+	double price=0.00;
+	double total=0.00;
+	double discount=66;//discount = original price - final price of the discount(660*10/100=66)
+	
+	public void Cal()
+	{
+	    Scanner sc5=new Scanner(System.in);
+	    System.out.println("\nWould you like to try our Methods to beautify your skin ?");
+		System.out.println("\nTreatments provided by Beautify me\n1 -> Infrared sauna - 660\n2 -> LED facial - 799\n3 -> AromaTheraphy - 499\n4 -> FacialCleanup - 899\n5 -> Pedicure - 499\n6 -> Manicure - 499");
+		System.out.println("\npress the numbers to add them into your cart");
+		System.out.println("\n How many items you prefer: "); 
+	
+        int i=sc5.nextInt();	
+		int arr[]=new int[i];
+		System.out.println("Add items: ");
+		for(int j=0;j<i;j++)
+		{
+			arr[j]=sc5.nextInt();
+		}
+		
+		System.out.println("Add items again to know the total amount: ");
+	    for(int j=0;j<i;j++)
+		{
+			price=sc5.nextDouble();
+			if(arr[j]==1)
+			{
+				System.out.println("You have chosen  Infrared sauna = "+Infraredsauna);
+				System.out.println("\nCONGRATULATIONS! You get discount of 10% on this treatment");
+				price+=660-66;
+			}
+			else if(arr[j]==2)
+			{
+				System.out.println("You have chosen LED facial = "+LEDfacial);
+				price+=799;
+				System.out.println("Since you have chosen LED facial you get Free CLINIQUE Moisturizer");
+			}
+			else if(arr[j]==3)
+			{
+				System.out.println("You have chosen AromaTheraphy = "+AromaTheraphy);
+				price+=499;
+			}
+			else if(arr[j]==4)
+			{
+				System.out.println("You have chosen FacialCleanup = "+FacialCleanup);
+				price+=899;
+			}
+			else if(arr[j]==5)
+			{
+				System.out.println("You have chosen Pedicure = "+Pedicure);
+				price+=499;
+			}
+			else if(arr[j]==6)
+			{
+				System.out.println("You have chosen Manicure = "+Manicure);
+				price+=499;
+			}
+			else
+			{
+				System.out.println("invalid choice");
+			}
+                total=total+price;
+			  
+		}	
+					System.out.println("\t\t\t\t------");
+					System.out.println("\tTotalAmount to be paid :"+total);
+					System.out.println("\t\t\t\t------");
+	}
+}
+
+/**
+ * This class extends CustomerDetails1 and handles customer appointments.
+ */
+class Appointment extends CustomerDetails1 
+{
+    private String time;
+    private String date;
+
+    String getDate() 
+	{
+        return date;
+    }
+
+    void setDate() 
+	{
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Enter booking Date: ");
+        date = sc.nextLine();
+    }
+
+    String getTime() 
+	{
+        return time;
+    }
+
+    void setTime() 
+	{
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Enter booking time: ");
+        time = sc.nextLine();
+    }
+
+    void display() 
+	{
+        System.out.println("\t\t\t\tAppointment booked on" + " " + getDate() + " " + "at" + " " + getTime());
+        System.out.println("\n\t\t\t\t*****Thank You So Much for Visiting us*****");
+    }
+}
+
+/**
+ * Main class to execute the BEAUTIFY ME application.
+ */
+class CustomerDetailsApp 
+{
+    public static void main(String args[]) 
+	{
+        CustomerDetails1 ob1 = new CustomerDetails1();
+        System.out.println("*****Welcome to BEAUTIFY ME*****\t" + new Date());
+        ob1.Details();
+        System.out.println("THANK YOU FOR YOUR DETAILS");
+        Calculation ob2 = new Calculation();
+        ob2.Cal();
+        Appointment ob3 = new Appointment();
+        System.out.println("\nAre you willing to book an Appointment ?");
+        System.out.println("\nIF YES THEN PRESS 's' IF NO THEN PRESS 'n' ");
+        Scanner so = new Scanner(System.in);
+        char s = so.next().charAt(0);
+        if (Character.toLowerCase(s) == 's') 
+		{
+            System.out.println("\nProceed further to book an appointment");
+            ob3.getDate();
+            ob3.setDate();
+            ob3.getTime();
+            ob3.setTime();
+
+            System.out.println("\nEnter Payment Method");
+            System.out.println("\nAdd a Card\nCash on delivery");
+            Scanner sp = new Scanner(System.in);
+            System.out.println("\npress 1 for card=====>||||Press 2 for Cash");
+            try 
+			{
+                int op = sp.nextInt();
+                switch (op) 
+				{
+                    case 1:
+                        System.out.println("Enter Card Details");
+                        Scanner scan = new Scanner(System.in);
+                        String card = scan.nextLine();
+                        break;
+                    case 2:
+                        System.out.println("Please pay cash");
+                        break;
+                    default:
+                        System.out.println("Invalid payment method");
+                        break;
+                }
+            } catch (InputMismatchException e) 
+			{
+                System.out.println("Error: " + e.getMessage());
+            }
+            ob1.display();
+            ob3.display();
+
+        } 
+		else 
+		{
+            System.out.println("THANK YOU FOR VISITING US......BYEEE!");
+        }
+    }
+}
